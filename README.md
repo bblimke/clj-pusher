@@ -8,6 +8,10 @@ Make sure you have [Leiningen](http://github.com/technomancy/leiningen) installe
 
 	lein deps && lein jar
 
+##Installation
+
+Library can be installed as a dependency from [Clojars](http://clojars.org/clj-pusher)
+
 ##Example
 
 	(:use 'pusher)
