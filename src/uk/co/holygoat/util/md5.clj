@@ -1,10 +1,9 @@
 (ns uk.co.holygoat.util.md5
   (:refer-clojure)
-  (:import
-     (java.security 
-       NoSuchAlgorithmException
-       MessageDigest)
-     (java.math BigInteger)))
+  (:import (java.security
+            NoSuchAlgorithmException
+            MessageDigest)
+           (java.math BigInteger)))
 
 ;; Supposedly efficient padding routine.
 (defmacro pad [pad-to pad-char #^String s]
@@ -12,7 +11,7 @@
          len# (int (.length ss#))
          diff# (int (- len# ~pad-to))
          #^String padstring# ~(apply str (repeat pad-to pad-char))]
-     
+
      (if (< diff# 0)
        ;; Needs padding.
        (.concat (.substring padstring# (+ ~pad-to diff#))
@@ -33,6 +32,6 @@
               (.update (.getBytes str)))]
     (try
       (pad 32 \0
-        (.toString (new BigInteger 1 (.digest alg)) 16))
+           (.toString (new BigInteger 1 (.digest alg)) 16))
       (catch NoSuchAlgorithmException e
         (throw (new RuntimeException e))))))

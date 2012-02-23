@@ -3,17 +3,17 @@
    [uk.co.holygoat.util.md5 :as md5])
  (:use
    [clojure.contrib.java-utils :only [as-str]]
-   [clojure.contrib.str-utils :only [str-join]])
- (:import   
+   [clojure.string :only [join]])
+ (:import
    (javax.crypto Mac)
    (javax.crypto.spec SecretKeySpec)
    (java.math BigInteger)))
 
-(defn current-time-millis []
+(defn ^{:dynamic true} *current-time-millis* []
   (long (System/currentTimeMillis)))
 
 (defn- current-timestamp []
-  (let [millis (current-time-millis)
+  (let [millis (*current-time-millis*)
         now (long (/ millis 1000))]
     now))
 
@@ -42,12 +42,12 @@
 
 
 (defn- parameter-string [params]
-  (str-join "&"
-    (map (fn [[key val]] (str (as-str key) "=" (as-str val)))
-      (sort-by #(as-str (key %)) java.lang.String/CASE_INSENSITIVE_ORDER params))))
+  (join "&"
+        (map (fn [[key val]] (str (as-str key) "=" (as-str val)))
+             (sort-by #(as-str (key %)) java.lang.String/CASE_INSENSITIVE_ORDER params))))
 
 (defn- signature-string [request]
-  (str-join "\n" [(request :method) (request :path) (parameter-string (request :query))]))
+  (join "\n" [(request :method) (request :path) (parameter-string (request :query))]))
 
 (defn- generate-signature [secret request]
   (hmac secret (signature-string request)))
