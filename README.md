@@ -6,7 +6,7 @@ This library provides access to [Pusher API](http://www.pusherapp.com) from Cloj
 
 Make sure you have [Leiningen](http://github.com/technomancy/leiningen) installed.
 
-  lein deps && lein jar
+    lein deps && lein jar
 
 ##Installation
 
@@ -14,24 +14,24 @@ Library can be installed as a dependency from [Clojars](http://clojars.org/clj-p
 
 ##Example
 
-  (:use 'pusher)
+    (:use 'pusher)
 
-  (with-pusher-auth ["my-pusher-app-id" "my-pusher-key" "my-pusher-secret"]
-    (with-pusher-channel "test_channel"
-      (trigger "my_event" {:data "helloworld"}))))
+    (with-pusher-auth ["my-pusher-app-id" "my-pusher-key" "my-pusher-secret"]
+      (with-pusher-channel "test_channel"
+        (trigger "my_event" {:data "helloworld"}))))
 
 or with credentials set permanently
 
-  (alter-var-root (var *pusher-app-id*)
-    (constantly "my-pusher-app-id"))
-  (alter-var-root (var *pusher-key*)
-    (constantly "my-pusher-key"))
-  (alter-var-root (var *pusher-secret*)
-    (constantly "my-pusher-secret"))
-  (alter-var-root (var *pusher-channel*)
-    (constantly "test_channel"))
+    (alter-var-root (var *pusher-app-id*)
+      (constantly "my-pusher-app-id"))
+    (alter-var-root (var *pusher-key*)
+      (constantly "my-pusher-key"))
+    (alter-var-root (var *pusher-secret*)
+      (constantly "my-pusher-secret"))
+    (alter-var-root (var *pusher-channel*)
+      (constantly "test_channel"))
 
-  (trigger "my_event" {:data "helloworld"})
+    (trigger "my_event" {:data "helloworld"})
 
 ##Copyright
 
