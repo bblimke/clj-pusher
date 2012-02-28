@@ -1,19 +1,16 @@
 (ns pusher
  (:require
-   [com.twinql.clojure.http :as http]
+   [clj-httpc.client :as http]
    [pusher.auth :as auth])
  (:use
-   [clojure.contrib.json.write :only [json-str]])
- (:import
-   (java.net URI URLEncoder)
-   (org.apache.http.entity StringEntity)))
+   [clojure.data.json :only [json-str]]))
 
-(defonce *pusher-app-id* nil)
-(defonce *pusher-key* nil)
-(defonce *pusher-secret* nil)
-(defonce *pusher-channel* nil)
+(def ^{:dynamic true} *pusher-app-id* nil)
+(def ^{:dynamic true} *pusher-key* nil)
+(def ^{:dynamic true} *pusher-secret* nil)
+(def ^{:dynamic true} *pusher-channel* nil)
 
-(defonce pusher-api-host "http://api.pusherapp.com")
+(def pusher-api-host "http://api.pusherapp.com")
 
 (defmacro with-pusher-auth [[app-id key secret] & body]
   `(binding [*pusher-app-id* ~app-id *pusher-key* ~key *pusher-secret* ~secret]
@@ -33,12 +30,7 @@
 
 (defn trigger [event data]
   (let [request (struct request "POST" (channel-events-path) {:name event} (json-str data))]
-    (http/post (new URI (uri (request :path)))
-      :body (StringEntity. (request :body))
-      :as :string
-      :query ((auth/authenticated-request *pusher-key* *pusher-secret* request) :query)
-      :headers {"Content-Type" "application/json"})))
-
-
-
-
+    (http/post (uri (request :path))
+               {:body (request :body)
+                :query-params (:query (auth/authenticated-request *pusher-key* *pusher-secret* request))
+                :headers {"Content-Type" "application/json"}})))
