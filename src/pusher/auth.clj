@@ -2,7 +2,6 @@
  (:require
    [uk.co.holygoat.util.md5 :as md5])
  (:use
-   [clojure.contrib.java-utils :only [as-str]]
    [clojure.string :only [join]])
  (:import
    (javax.crypto Mac)
@@ -43,8 +42,8 @@
 
 (defn- parameter-string [params]
   (join "&"
-        (map (fn [[key val]] (str (as-str key) "=" (as-str val)))
-             (sort-by #(as-str (key %)) java.lang.String/CASE_INSENSITIVE_ORDER params))))
+        (map (fn [[key val]] (str (name key) "=" (str val)))
+             (sort-by #(name (key %)) java.lang.String/CASE_INSENSITIVE_ORDER params))))
 
 (defn- signature-string [request]
   (join "\n" [(request :method) (request :path) (parameter-string (request :query))]))
