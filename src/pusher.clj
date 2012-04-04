@@ -1,6 +1,6 @@
 (ns pusher
  (:require
-   [clj-httpc.client :as http]
+   [clj-http.client :as http]
    [pusher.auth :as auth])
  (:use
    [clojure.data.json :only [json-str]]))
