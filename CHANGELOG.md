@@ -1,5 +1,9 @@
 # Changelog
 
+## 0.3.1
+
+* Fix authentication errors caused by missing left zero padding.
+
 ## 0.3.0
 
 * Switch to use clj-http instead of clj-httpc

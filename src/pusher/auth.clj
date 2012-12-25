@@ -29,7 +29,7 @@
 (defn- byte-array-to-str [bytes]
   (let [big-integer (BigInteger. 1 bytes)
         hash (.toString big-integer 16)]
-    (ljust hash 32 0)))
+    (ljust hash 64 0)))
 
 (defn- hmac
   "Calculate HMAC signature for given data."
