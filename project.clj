@@ -1,4 +1,4 @@
-(defproject clj-pusher "0.3.0"
+(defproject tamasjung/clj-pusher "0.3.1"
   :description "Pusher (http://www.pusherapp.com) Client for Clojure"
   :dependencies [[org.clojure/clojure "1.3.0"]
                  [org.clojure/data.json "0.1.2"]
