@@ -10,7 +10,7 @@
 (def ^{:dynamic true} *pusher-secret* nil)
 (def ^{:dynamic true} *pusher-channel* nil)
 
-(def pusher-api-host "http://api.pusherapp.com")
+(def pusher-api-host "https://api-ap2.pusher.com")
 
 (defmacro with-pusher-auth [[app-id key secret] & body]
   `(binding [*pusher-app-id* ~app-id *pusher-key* ~key *pusher-secret* ~secret]
