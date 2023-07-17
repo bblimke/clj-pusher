@@ -18,7 +18,8 @@ Library can be installed as a dependency from [Clojars](http://clojars.org/clj-p
 
     (with-pusher-auth ["my-pusher-app-id" "my-pusher-key" "my-pusher-secret"]
       (with-pusher-channel "test_channel"
-        (trigger "my_event" {:data "helloworld"}))))
+        (with-pusher-cluster "ap3"
+          (trigger "my_event" {:data "helloworld"}))))
 
 or with credentials set permanently
 
@@ -30,7 +31,9 @@ or with credentials set permanently
       (constantly "my-pusher-secret"))
     (alter-var-root (var *pusher-channel*)
       (constantly "test_channel"))
-
+    (alter-var-root (var *pusher-cluster*)
+      (constantly "ap3"))
+      
     (trigger "my_event" {:data "helloworld"})
 
 ##Copyright
