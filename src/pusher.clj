@@ -9,8 +9,9 @@
 (def ^{:dynamic true} *pusher-key* nil)
 (def ^{:dynamic true} *pusher-secret* nil)
 (def ^{:dynamic true} *pusher-channel* nil)
+(def ^{:dynamic true} *pusher-cluster* "ap2")
 
-(def pusher-api-host "http://api.pusherapp.com")
+(def pusher-api-host "https://api-%s.pusher.com")
 
 (defmacro with-pusher-auth [[app-id key secret] & body]
   `(binding [*pusher-app-id* ~app-id *pusher-key* ~key *pusher-secret* ~secret]
@@ -20,11 +21,15 @@
   `(binding [*pusher-channel* ~channel]
      ~@body))
 
+(defmacro with-pusher-cluster [cluster & body]
+  `(binding [*pusher-cluster* ~cluster]
+     ~@body))
+
 (defn- channel-events-path []
   (str "/apps/" *pusher-app-id* "/channels/" *pusher-channel* "/events"))
 
 (defn- uri [path]
-  (str pusher-api-host path))
+  (str (format pusher-api-host *pusher-cluster*) path))
 
 (defstruct request :method :path :query :body)
 
